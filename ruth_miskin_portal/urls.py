@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from csv_upload.views import UploadView
+
 urlpatterns = [
+    path('admin/csv_upload/csvupload/add/', UploadView.as_view()),
     path('admin/', admin.site.urls),
 ]
