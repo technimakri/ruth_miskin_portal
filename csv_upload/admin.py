@@ -10,7 +10,7 @@ class SchoolUploadInline(admin.TabularInline):
 
 class CSVUploadAdmin(admin.ModelAdmin):
     inlines = (SchoolUploadInline,)
-    list_display = ('filename', 'time_created')
+    list_display = ('filename', 'time_created', 'outcome')
     date_hierarchy = 'time_created'
 
 
