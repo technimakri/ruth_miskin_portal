@@ -1,8 +1,11 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 
 from ruth_miskin_user.forms import TeacherForm
+from ruth_miskin_user.models import Teacher
 
 
 class HomeView(View):
@@ -15,8 +18,23 @@ class HomeView(View):
 class CreateAccount(View):
 
     def get(self, request, *args, **kwargs):
-        user_form = UserCreationForm()
-        teacher_form = TeacherForm()
+        user_form = UserCreationForm(prefix='user_creation')
+        teacher_form = TeacherForm(prefix='teacher_creation')
         context = {'user_form': user_form, 'teacher_form': teacher_form}
 
+        return render(request, 'ruth_miskin_user/create_account.html', context=context)
+
+    def post(self, request, *args, **kwargs):
+        user_form = UserCreationForm(request.POST, prefix='user_creation')
+        teacher_form = TeacherForm(request.POST, prefix='teacher_creation')
+
+        if user_form.is_valid() and teacher_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_teacher = Teacher(**teacher_form.cleaned_data)
+            new_teacher.user = new_user
+            new_user.save()
+            new_teacher.save()
+
+            return HttpResponseRedirect('/')
+        context = {'user_form': user_form, 'teacher_form': teacher_form}
         return render(request, 'ruth_miskin_user/create_account.html', context=context)
