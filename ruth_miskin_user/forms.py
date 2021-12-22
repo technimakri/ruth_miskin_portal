@@ -5,9 +5,13 @@ from schools.models import School
 
 
 class TeacherForm(ModelForm):
+    # These fields required customisation
     school = ModelChoiceField(queryset=School.objects.filter(open=True).order_by('school_name'))
-    dob = DateField(input_formats=['%d/%m/%Y'], label='Date of birth',
-                    help_text='Please use the format DD/MM/YYYY e.g. 10/05/1991. This field is not mandatory.')
+
+    dob = DateField(input_formats=['%d/%m/%Y'],
+                    label='Date of birth',
+                    help_text='Please use the format DD/MM/YYYY e.g. 10/05/1991. This field is not mandatory.',
+                    required=False)
 
     class Meta:
         model = Teacher

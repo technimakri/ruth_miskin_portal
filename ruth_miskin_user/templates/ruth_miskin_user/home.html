@@ -4,7 +4,13 @@
   <h1>Welcome to the Ruth Miskin Portal</h1>
 {% if user.is_authenticated %}
   <div>
-    <p>Logged in as {{ user.email }}</p>
+    <p>Logged in as {{ user.teacher.first_name }} {{ user.teacher.last_name }}</p>
+  </div>
+  <div>
+    <p>Email {{ user.teacher.email }}</p>
+  </div>
+  <div>
+    <p>School: {{ user.teacher.school }}</p>
   </div>
   <div>
     <a href="accounts/logout">Logout</a>
