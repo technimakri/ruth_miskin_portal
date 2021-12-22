@@ -2,7 +2,14 @@
 
 {% block content %}
   <h1>Welcome to the Ruth Miskin Portal</h1>
-{% if user.is_authenticated %}
+{% if user.is_staff %}
+<div>
+  <p>You are logged in as a staff/superuser, please logout before continuing.</p>
+</div>
+  <div>
+    <a href="accounts/logout">Logout</a>
+  </div>
+{% elif user.is_authenticated %}
   <div>
     <p>Logged in as {{ user.teacher.first_name }} {{ user.teacher.last_name }}</p>
   </div>
