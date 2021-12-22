@@ -1,6 +1,5 @@
 import csv
 
-from django.core.exceptions import ValidationError
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from django.forms import URLField
 from django.http import HttpResponseRedirect
@@ -12,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 from csv_upload.forms import CSVUploadForm
 from csv_upload.models import CSVUpload, SchoolUploadError
-from schools.mixins import SuperUserRequiredMixin
+from csv_upload.mixins import SuperUserRequiredMixin
 from schools.models import School
 
 

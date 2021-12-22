@@ -12,4 +12,7 @@ class School(models.Model):
     website = models.URLField(max_length=400, blank=True, null=True)
     phone_number = models.CharField(max_length=50, blank=True)
 
+    def __str__(self):
+        return self.school_name
+
 

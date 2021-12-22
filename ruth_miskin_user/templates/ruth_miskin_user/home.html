@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <h1>Welcome to the Ruth Miskin Portal</h1>
+{% if user.is_authenticated %}
+  <div>
+    <p>Logged in as {{ user.email }}</p>
+  </div>
+  <div>
+    <a href="accounts/logout">Logout</a>
+  </div>
+{% else %}
+  <div>
+    <a href="/accounts/login">Login</a>
+  </div>
+  <div>
+    <a href="accounts/create">Create an account</a>
+  </div>
+{% endif %}
+{% endblock %}
