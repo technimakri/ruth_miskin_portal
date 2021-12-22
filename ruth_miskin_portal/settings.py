@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'schools',
-    'csv_upload'
+    'csv_upload',
+    'ruth_miskin_user'
 ]
 
 MIDDLEWARE = [

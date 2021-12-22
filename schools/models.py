@@ -9,7 +9,7 @@ class School(models.Model):
     close_date = models.DateField(blank=True, null=True)
     town = models.CharField(max_length=150, blank=True)
     postcode = models.CharField(max_length=7, blank=True)
-    website = models.URLField(max_length=400, blank=True)
+    website = models.URLField(max_length=400, blank=True, null=True)
     phone_number = models.CharField(max_length=50, blank=True)
 
 

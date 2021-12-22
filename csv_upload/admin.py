@@ -1,15 +1,15 @@
 from django.contrib import admin
 
-from csv_upload.models import CSVUpload, SchoolUpload
+from csv_upload.models import CSVUpload, SchoolUploadError
 
 
-class SchoolUploadInline(admin.TabularInline):
+class SchoolUploadErrorInline(admin.TabularInline):
     can_delete = False
-    model = SchoolUpload
+    model = SchoolUploadError
 
 
 class CSVUploadAdmin(admin.ModelAdmin):
-    inlines = (SchoolUploadInline,)
+    inlines = (SchoolUploadErrorInline,)
     list_display = ('filename', 'time_created', 'outcome')
     date_hierarchy = 'time_created'
 

@@ -8,11 +8,10 @@ class CSVUpload(models.Model):
 
     filename = models.CharField(max_length=200)
     time_created = models.DateTimeField(default=timezone.now)
-    outcome = models.CharField(max_length=400, default='Pending')
+    outcome = models.CharField(max_length=400, default='Processing incomplete')
 
 
-
-class SchoolUpload(models.Model):
+class SchoolUploadError(models.Model):
     name = models.CharField(max_length=200)
-    csv = models.ForeignKey(CSVUpload, on_delete=models.CASCADE, related_name='uploaded_schools')
+    csv = models.ForeignKey(CSVUpload, on_delete=models.CASCADE, related_name='school_errors')
     error = models.CharField(max_length=400)

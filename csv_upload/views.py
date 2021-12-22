@@ -11,7 +11,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 from csv_upload.forms import CSVUploadForm
-from csv_upload.models import CSVUpload, SchoolUpload
+from csv_upload.models import CSVUpload, SchoolUploadError
 from schools.models import School
 
 
@@ -39,10 +39,12 @@ def csv_uploader(csv_file, field_names):
 
     csv_record = CSVUpload.objects.create(filename=csv_file.name)
     try:
-        with open(csv_file.temporary_file_path(), newline='') as csv_file:
+        with open(csv_file.temporary_file_path(), newline='', encoding='ISO-8859-1') as csv_file:
             reader = csv.DictReader(csv_file, fieldnames=field_names)
             next(reader)  # Ignore first line containing column titles
             for row in reader:
+                if not convert_status(row['open']):
+                    continue
                 try:
                     School.objects.create(
                         urn=row['urn'],
@@ -56,10 +58,14 @@ def csv_uploader(csv_file, field_names):
                         phone_number=row['phone_number']
                     )
                 except Exception as school_error:
-                    SchoolUpload.objects.create(name=row['school_name'], csv=csv_record, error=school_error)
+                    SchoolUploadError.objects.create(name=row['school_name'], csv=csv_record, error=school_error)
 
-        csv_record.outcome = 'Success'
-        csv_record.save()
+        if csv_record.school_errors.count() > 0:
+            csv_record.outcome = 'Success with some errors'
+            csv_record.save()
+        else:
+            csv_record.outcome = 'Success'
+            csv_record.save()
 
     except Exception as csv_error:
         csv_record.outcome = csv_error
